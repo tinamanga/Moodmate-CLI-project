@@ -1,6 +1,10 @@
 from sqlalchemy import Column, Integer, String ,Date, ForeignKey
 from sqlalchemy.orm import relationship
-from db.base import Base
+from lib.db.base import Base
+from .user import User
+from .mood_entry import MoodEntry
+from .activity import Activity
+
 
 # user model
 class User(Base):
