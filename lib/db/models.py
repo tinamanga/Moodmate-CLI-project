@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String ,Date, ForeignKey
 from sqlalchemy.orm import relationship
-from lib.db.base import Base
+from db.base import Base
 
 # user model
 class User(Base):
@@ -14,11 +14,6 @@ class User(Base):
         return f"<User(id={self.id}, name='{self.name}')>"
 
 # mood entry model
-
-from sqlalchemy import Column, Integer, String, Date, ForeignKey
-from sqlalchemy.orm import relationship
-from db.base import Base
-
 class MoodEntry(Base):
     __tablename__ = 'mood_entries'
 
@@ -32,3 +27,16 @@ class MoodEntry(Base):
 
     def __repr__(self):
         return f"<MoodEntry(id={self.id}, mood='{self.mood}', date={self.date})>"
+    
+# activity model
+class Activity(Base):
+    __tablename__ = 'activities'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    entry_id = Column(Integer, ForeignKey("mood_entries.id"))
+
+    entry = relationship("MoodEntry", back_populates="activities")
+
+    def __repr__(self):
+        return f"<Activity(id={self.id}, name='{self.name}')>"
